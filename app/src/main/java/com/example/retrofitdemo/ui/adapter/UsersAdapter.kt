@@ -16,7 +16,7 @@ class UsersAdapter(private val list: List<User>) :
     /**
      * onClickItem RelativeLayout
      */
-    var onItemClick: ((User) -> Unit)? = null
+    var onItemClick: ((User,pos:Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -31,26 +31,23 @@ class UsersAdapter(private val list: List<User>) :
         holder.username_textView.text = "Username :${userModel.getusername()}"
         holder.profile_url_textView.text = "Profile :${userModel.getprofile_url()}"
         holder.starred_url_textView.text = "Starred :${userModel.getstarred_url()}"
+        /**
+         * Item click implementation
+         */
+        holder.relativeLL.setOnClickListener {
+            onItemClick?.invoke(list[position],position)
+        }
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    inner class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+    class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val imageView: ImageView = itemView.findViewById(R.id.avatar_url)
         val username_textView: TextView = itemView.findViewById(R.id.username)
         val profile_url_textView: TextView = itemView.findViewById(R.id.profile_url)
         val starred_url_textView: TextView = itemView.findViewById(R.id.starred_url)
         val relativeLL: RelativeLayout = itemView.findViewById(R.id.relativeLL)
-
-        /**
-         * Item click implementation
-         */
-        init {
-            relativeLL.setOnClickListener {
-                onItemClick?.invoke(list[adapterPosition])
-            }
-        }
     }
 }

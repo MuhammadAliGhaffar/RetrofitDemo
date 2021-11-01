@@ -49,8 +49,8 @@ class UserFragment : Fragment() {
         usersAdapter = UsersAdapter(list)
         recyclerView.adapter = usersAdapter
 
-        usersAdapter.onItemClick = {
-            Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show()
+        usersAdapter.onItemClick = { user: User, i: Int ->
+            Toast.makeText(context, list.get(i).toString(), Toast.LENGTH_SHORT).show()
         }
 
     }

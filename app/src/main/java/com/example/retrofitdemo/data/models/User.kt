@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName
 
 class User {
     //@SerializedName("login")
-    private lateinit var username: String
+    private val username: String
 
     //@SerializedName("avatar_url")
-    private var avatar_url: Int
+    private val avatar_url: Int
 
     //@SerializedName("html_url")
-    private lateinit var profile_url: String
+    private val profile_url: String
 
     //@SerializedName("starred_url")
-    private lateinit var starred_url: String
+    private val starred_url: String
 
     constructor(username: String, avatar_url: Int, profile_url: String, starred_url: String) {
         this.username = username
