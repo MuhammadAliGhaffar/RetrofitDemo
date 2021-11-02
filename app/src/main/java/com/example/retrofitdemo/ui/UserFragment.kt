@@ -1,31 +1,34 @@
 package com.example.retrofitdemo.ui
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitdemo.R
-import com.example.retrofitdemo.data.models.User
+import com.example.retrofitdemo.repository.Repository
+import com.example.retrofitdemo.repository.RetrofitService
 import com.example.retrofitdemo.ui.adapter.UsersAdapter
+import com.example.retrofitdemo.ui.viewModel.FactoryViewModel
+import com.example.retrofitdemo.ui.viewModel.UserViewModel
 
 
 class UserFragment : Fragment() {
 
+    lateinit var userviewModel:UserViewModel
+    private val retrofitService = RetrofitService.getInstance()
     private lateinit var recyclerView:RecyclerView
-    private lateinit var usersAdapter: UsersAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var usersAdapter = UsersAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view:View = inflater.inflate(R.layout.fragment_user, container, false)
+        userviewModel = ViewModelProvider(requireActivity(), FactoryViewModel(Repository(retrofitService))).get(UserViewModel::class.java)
         initView(view)
         return view
     }
@@ -34,24 +37,19 @@ class UserFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        val list = ArrayList<User>()
-        list.add(User("Muhammad Ali Ghaffar",R.drawable.ic_launcher_background,"ali.com","ghaffar.com"))
-        list.add(User("Muhammad Ali Ghaffar",R.drawable.ic_launcher_background,"ali.com","ghaffar.com"))
-        list.add(User("Muhammad Ali Ghaffar",R.drawable.ic_launcher_background,"ali.com","ghaffar.com"))
-        list.add(User("Muhammad Ali Ghaffar",R.drawable.ic_launcher_background,"ali.com","ghaffar.com"))
-        list.add(User("Muhammad Ali Ghaffar",R.drawable.ic_launcher_background,"ali.com","ghaffar.com"))
-        list.add(User("Muhammad Ali Ghaffar",R.drawable.ic_launcher_background,"ali.com","ghaffar.com"))
-        list.add(User("Muhammad Ali Ghaffar",R.drawable.ic_launcher_background,"ali.com","ghaffar.com"))
-        list.add(User("Muhammad Ali Ghaffar",R.drawable.ic_launcher_background,"ali.com","ghaffar.com"))
-        list.add(User("Muhammad Ali Ghaffar",R.drawable.ic_launcher_background,"ali.com","ghaffar.com"))
-        list.add(User("Muhammad Ali Ghaffar",R.drawable.ic_launcher_background,"ali.com","ghaffar.com"))
-
-        usersAdapter = UsersAdapter(list)
         recyclerView.adapter = usersAdapter
+        userviewModel.userList.observe(requireActivity(), Observer {
+            Log.i("AliTag", "onCreate: $it")
+            usersAdapter.setuserList(it)
+        })
+        userviewModel.errorMessage.observe(requireActivity(), Observer {
+            Log.i("AliTag", "error: $it")
+        })
+        userviewModel.getAllUsers()
 
-        usersAdapter.onItemClick = { user: User, i: Int ->
-            Toast.makeText(context, list.get(i).toString(), Toast.LENGTH_SHORT).show()
-        }
+//        usersAdapter.onItemClick = { user: User, i: Int ->
+//            Toast.makeText(context, list.get(i).toString(), Toast.LENGTH_SHORT).show()
+//        }
 
     }
 }

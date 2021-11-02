@@ -7,27 +7,34 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.data.models.User
 
-class UsersAdapter(private val list: List<User>) :
-    RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+
+    var list = mutableListOf<User>()
 
     /**
      * onClickItem RelativeLayout
      */
-    var onItemClick: ((User,pos:Int) -> Unit)? = null
+    var onItemClick: ((User, pos: Int) -> Unit)? = null
+
+    fun setuserList(list: List<User>) {
+        this.list = list.toMutableList()
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.users_item, parent, false)
-
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.users_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userModel = list[position]
-        holder.imageView.setImageResource(userModel.getavatar_url())
+
+        //holder.imageView.setImageResource(userModel.getavatar_url())
+        Glide.with(holder.imageView.context).load(userModel.getavatar_url()).into(holder.imageView)
         holder.username_textView.text = "Username :${userModel.getusername()}"
         holder.profile_url_textView.text = "Profile :${userModel.getprofile_url()}"
         holder.starred_url_textView.text = "Starred :${userModel.getstarred_url()}"
@@ -35,7 +42,7 @@ class UsersAdapter(private val list: List<User>) :
          * Item click implementation
          */
         holder.relativeLL.setOnClickListener {
-            onItemClick?.invoke(list[position],position)
+            onItemClick?.invoke(list[position], position)
         }
     }
 
