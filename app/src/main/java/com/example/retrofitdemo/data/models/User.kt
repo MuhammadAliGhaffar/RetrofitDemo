@@ -1,19 +1,18 @@
 package com.example.retrofitdemo.data.models
 
-import android.widget.RelativeLayout
 import com.google.gson.annotations.SerializedName
 
 class User {
-    //@SerializedName("login")
+    @SerializedName("login")
     private val username: String
 
-    //@SerializedName("avatar_url")
+    @SerializedName("avatar_url")
     private val avatar_url: Int
 
-    //@SerializedName("html_url")
+    @SerializedName("html_url")
     private val profile_url: String
 
-    //@SerializedName("starred_url")
+    @SerializedName("starred_url")
     private val starred_url: String
 
     constructor(username: String, avatar_url: Int, profile_url: String, starred_url: String) {
