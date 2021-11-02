@@ -23,6 +23,7 @@ class User {
     }
 
     fun getusername(): String = username
+    //ali
 
     fun getavatar_url(): String = avatar_url
 
