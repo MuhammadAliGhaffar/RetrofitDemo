@@ -1,5 +1,6 @@
 package com.example.retrofitdemo.ui.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.retrofitdemo.data.models.User
@@ -10,7 +11,10 @@ import retrofit2.Response
 
 class UserViewModel constructor(private val repository: Repository)  : ViewModel() {
 
-    val userList = MutableLiveData<List<User>>()
+    private val _userList = MutableLiveData<List<User>>()
+
+    val userList :LiveData<List<User>> = _userList
+
     val errorMessage = MutableLiveData<String>()
 
     fun getAllUsers() {
@@ -18,7 +22,7 @@ class UserViewModel constructor(private val repository: Repository)  : ViewModel
         val response = repository.getAllUsers()
         response.enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                userList.postValue(response.body())
+                _userList.postValue(response.body())
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {

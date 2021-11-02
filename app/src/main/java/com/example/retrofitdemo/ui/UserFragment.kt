@@ -22,15 +22,19 @@ import com.example.retrofitdemo.ui.viewModel.UserViewModel
 
 class UserFragment : Fragment() {
 
-    lateinit var userviewModel:UserViewModel
+    lateinit var userviewModel: UserViewModel
     private val retrofitService = RetrofitService.getInstance()
-    private lateinit var recyclerView:RecyclerView
+    private lateinit var recyclerView: RecyclerView
     private var usersAdapter = UsersAdapter()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view:View = inflater.inflate(R.layout.fragment_user, container, false)
-        userviewModel = ViewModelProvider(requireActivity(), FactoryViewModel(Repository(retrofitService))).get(UserViewModel::class.java)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        var view: View = inflater.inflate(R.layout.fragment_user, container, false)
+        userviewModel =
+            ViewModelProvider(requireActivity(), FactoryViewModel(Repository(retrofitService))).get(
+                UserViewModel::class.java
+            )
         initView(view)
         return view
     }
@@ -40,20 +44,17 @@ class UserFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         recyclerView.adapter = usersAdapter
-        userviewModel.userList.observe(requireActivity(), Observer {
+        userviewModel.userList.observe(this.viewLifecycleOwner, Observer {
             Log.i("AliTag", "onCreate: $it")
             usersAdapter.setuserList(it)
         })
-        userviewModel.errorMessage.observe(requireActivity(), Observer {
+        userviewModel.errorMessage.observe(this.viewLifecycleOwner, Observer {
             Log.i("AliTag", "error: $it")
         })
         userviewModel.getAllUsers()
 
         usersAdapter.onItemClick = { user: User, i: Int ->
-            userviewModel.userList.observe(requireActivity(), Observer {
-                Toast.makeText(context, it.get(i).toString(), Toast.LENGTH_SHORT).show()
-
-            })
+            Toast.makeText(context, user.toString(), Toast.LENGTH_SHORT).show()
         }
 
     }
