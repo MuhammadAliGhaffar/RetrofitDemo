@@ -3,6 +3,7 @@ package com.example.retrofitdemo.data.models
 import com.google.gson.annotations.SerializedName
 
 class User {
+    //test
     @SerializedName("login")
     private val username: String
 
