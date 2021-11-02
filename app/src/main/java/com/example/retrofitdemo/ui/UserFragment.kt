@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitdemo.R
+import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.repository.Repository
 import com.example.retrofitdemo.repository.RetrofitService
 import com.example.retrofitdemo.ui.adapter.UsersAdapter
@@ -47,9 +49,12 @@ class UserFragment : Fragment() {
         })
         userviewModel.getAllUsers()
 
-//        usersAdapter.onItemClick = { user: User, i: Int ->
-//            Toast.makeText(context, list.get(i).toString(), Toast.LENGTH_SHORT).show()
-//        }
+        usersAdapter.onItemClick = { user: User, i: Int ->
+            userviewModel.userList.observe(requireActivity(), Observer {
+                Toast.makeText(context, it.get(i).toString(), Toast.LENGTH_SHORT).show()
+
+            })
+        }
 
     }
 }
