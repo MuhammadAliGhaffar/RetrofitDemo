@@ -24,7 +24,6 @@ class UserViewModel constructor(private val repository: Repository)  : ViewModel
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 _userList.postValue(response.body())
             }
-
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 errorMessage.postValue(t.message)
             }

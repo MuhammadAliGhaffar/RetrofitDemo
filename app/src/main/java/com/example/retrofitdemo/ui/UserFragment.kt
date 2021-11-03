@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.repository.Repository
-import com.example.retrofitdemo.repository.RetrofitService
+import com.example.retrofitdemo.repository.UserDAO
 import com.example.retrofitdemo.ui.adapter.UsersAdapter
 import com.example.retrofitdemo.ui.viewModel.FactoryViewModel
 import com.example.retrofitdemo.ui.viewModel.UserViewModel
@@ -23,7 +23,7 @@ import com.example.retrofitdemo.ui.viewModel.UserViewModel
 class UserFragment : Fragment() {
 
     lateinit var userviewModel: UserViewModel
-    private val retrofitService = RetrofitService.getInstance()
+    private val retrofitService = UserDAO.getInstance()
     private lateinit var recyclerView: RecyclerView
     private var usersAdapter = UsersAdapter()
 
@@ -44,10 +44,17 @@ class UserFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         recyclerView.adapter = usersAdapter
+
+        /**
+         * If the user navigates to FragmentB again and presses back to visit
+         * FragmetnA, the LiveData observer was triggered thrice and it continued to increase
+         */
+        userviewModel.userList.removeObservers(requireActivity())
         userviewModel.userList.observe(this.viewLifecycleOwner, Observer {
             Log.i("AliTag", "onCreate: $it")
             usersAdapter.setuserList(it)
         })
+        userviewModel.errorMessage.removeObservers(requireActivity())
         userviewModel.errorMessage.observe(this.viewLifecycleOwner, Observer {
             Log.i("AliTag", "error: $it")
         })

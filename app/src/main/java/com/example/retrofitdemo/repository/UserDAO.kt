@@ -6,26 +6,26 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-interface RetrofitService {
+interface UserDAO {
 
     @GET("users")
     fun getAllUsers() : Call<List<User>>
 
-    companion object {
+    companion object RemoteDatabase {
 
-        var retrofitService: RetrofitService? = null
+        var userDAO: UserDAO? = null
         var BaseUrl = "https://api.github.com/"
 
-        fun getInstance() : RetrofitService {
+        fun getInstance() : UserDAO {
 
-            if (retrofitService == null) {
+            if (userDAO == null) {
                 val retrofit = Retrofit.Builder()
                     .baseUrl(BaseUrl)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-                retrofitService = retrofit.create(RetrofitService::class.java)
+                userDAO = retrofit.create(UserDAO::class.java)
             }
-            return retrofitService!!
+            return userDAO!!
         }
     }
 }
