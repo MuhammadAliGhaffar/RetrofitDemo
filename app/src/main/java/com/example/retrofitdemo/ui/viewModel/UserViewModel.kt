@@ -5,9 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.repository.Repository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UserViewModel constructor(private val repository: Repository)  : ViewModel() {
 
@@ -18,15 +19,15 @@ class UserViewModel constructor(private val repository: Repository)  : ViewModel
     val errorMessage = MutableLiveData<String>()
 
     fun getAllUsers() {
-
-        val response = repository.getAllUsers()
-        response.enqueue(object : Callback<List<User>> {
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                _userList.postValue(response.body())
+        CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.Main){
+                val response = repository.getAllUsers()
+                if (response.isSuccessful) {
+                    _userList.postValue(response.body())
+                } else {
+                    errorMessage.postValue(response.message())
+                }
             }
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                errorMessage.postValue(t.message)
-            }
-        })
+        }
     }
 }

@@ -1,29 +1,29 @@
 package com.example.retrofitdemo.repository
 
 import com.example.retrofitdemo.data.models.User
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-interface UserDAO {
+interface RetrofitService {
 
     @GET("users")
-    fun getAllUsers() : Call<List<User>>
+    suspend fun getAllUsers() : Response<List<User>>
 
     companion object RemoteDatabase {
 
-        var userDAO: UserDAO? = null
+        var userDAO: RetrofitService? = null
         var BaseUrl = "https://api.github.com/"
 
-        fun getInstance() : UserDAO {
+        fun getInstance() : RetrofitService {
 
             if (userDAO == null) {
                 val retrofit = Retrofit.Builder()
                     .baseUrl(BaseUrl)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-                userDAO = retrofit.create(UserDAO::class.java)
+                userDAO = retrofit.create(RetrofitService::class.java)
             }
             return userDAO!!
         }

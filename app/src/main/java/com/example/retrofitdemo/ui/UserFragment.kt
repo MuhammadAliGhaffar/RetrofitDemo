@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.repository.Repository
-import com.example.retrofitdemo.repository.UserDAO
+import com.example.retrofitdemo.repository.RetrofitService
 import com.example.retrofitdemo.ui.adapter.UsersAdapter
 import com.example.retrofitdemo.ui.viewModel.FactoryViewModel
 import com.example.retrofitdemo.ui.viewModel.UserViewModel
@@ -23,7 +23,7 @@ import com.example.retrofitdemo.ui.viewModel.UserViewModel
 class UserFragment : Fragment() {
 
     lateinit var userviewModel: UserViewModel
-    private val retrofitService = UserDAO.getInstance()
+    private val retrofitService = RetrofitService.getInstance()
     private lateinit var recyclerView: RecyclerView
     private var usersAdapter = UsersAdapter()
 
@@ -58,11 +58,12 @@ class UserFragment : Fragment() {
         userviewModel.errorMessage.observe(this.viewLifecycleOwner, Observer {
             Log.i("AliTag", "error: $it")
         })
-        userviewModel.getAllUsers()
 
         usersAdapter.onItemClick = { user: User, i: Int ->
             Toast.makeText(context, user.toString(), Toast.LENGTH_SHORT).show()
         }
+
+        userviewModel.getAllUsers()
 
     }
 }
