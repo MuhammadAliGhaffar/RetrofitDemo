@@ -11,7 +11,7 @@ interface RetrofitService {
     @GET("users")
     suspend fun getAllUsers() : Response<List<User>>
 
-    companion object RemoteDatabase {
+    companion object {
 
         var userDAO: RetrofitService? = null
         var BaseUrl = "https://api.github.com/"

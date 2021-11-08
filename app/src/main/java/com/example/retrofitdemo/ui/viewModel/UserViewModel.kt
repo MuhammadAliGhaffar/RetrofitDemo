@@ -3,6 +3,7 @@ package com.example.retrofitdemo.ui.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.repository.Repository
 import kotlinx.coroutines.CoroutineScope
@@ -19,9 +20,9 @@ class UserViewModel constructor(private val repository: Repository)  : ViewModel
     val errorMessage = MutableLiveData<String>()
 
     fun getAllUsers() {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
+            val response = repository.getAllUsers()
             withContext(Dispatchers.Main){
-                val response = repository.getAllUsers()
                 if (response.isSuccessful) {
                     _userList.postValue(response.body())
                 } else {
