@@ -10,22 +10,4 @@ interface RetrofitService {
 
     @GET("users")
     suspend fun getAllUsers() : Response<List<User>>
-
-    companion object {
-
-        var userDAO: RetrofitService? = null
-        var BaseUrl = "https://api.github.com/"
-
-        fun getInstance() : RetrofitService {
-
-            if (userDAO == null) {
-                val retrofit = Retrofit.Builder()
-                    .baseUrl(BaseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                userDAO = retrofit.create(RetrofitService::class.java)
-            }
-            return userDAO!!
-        }
-    }
 }

@@ -1,5 +1,8 @@
 package com.example.retrofitdemo.repository
 
-class Repository constructor(private val retrofitService: RetrofitService) {
-    suspend fun getAllUsers() = retrofitService.getAllUsers()
+import com.example.retrofitdemo.data.models.User
+import retrofit2.Response
+
+interface Repository {
+    suspend fun getAllUsers() : Response<List<User>>
 }

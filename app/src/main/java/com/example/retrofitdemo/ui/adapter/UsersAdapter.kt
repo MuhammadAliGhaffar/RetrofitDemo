@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.data.models.User
+import javax.inject.Inject
 
-class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
     var list = mutableListOf<User>()
 

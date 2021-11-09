@@ -7,34 +7,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.data.models.User
-import com.example.retrofitdemo.repository.Repository
-import com.example.retrofitdemo.repository.RetrofitService
 import com.example.retrofitdemo.ui.adapter.UsersAdapter
-import com.example.retrofitdemo.ui.viewModel.FactoryViewModel
 import com.example.retrofitdemo.ui.viewModel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class UserFragment : Fragment() {
 
-    lateinit var userviewModel: UserViewModel
-    private val retrofitService = RetrofitService.getInstance()
     private lateinit var recyclerView: RecyclerView
-    private var usersAdapter = UsersAdapter()
+    @Inject lateinit var usersAdapter: UsersAdapter
+    private val userviewModel:UserViewModel by viewModels()
+
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view: View = inflater.inflate(R.layout.fragment_user, container, false)
-        userviewModel =
-            ViewModelProvider(requireActivity(), FactoryViewModel(Repository(retrofitService))).get(
-                UserViewModel::class.java
-            )
         initView(view)
         return view
     }
@@ -45,16 +39,10 @@ class UserFragment : Fragment() {
 
         recyclerView.adapter = usersAdapter
 
-        /**
-         * If the user navigates to FragmentB again and presses back to visit
-         * FragmetnA, the LiveData observer was triggered thrice and it continued to increase
-         */
-        userviewModel.userList.removeObservers(requireActivity())
+
         userviewModel.userList.observe(this.viewLifecycleOwner, Observer {
-            Log.i("AliTag", "onCreate: $it")
             usersAdapter.setuserList(it)
         })
-        userviewModel.errorMessage.removeObservers(requireActivity())
         userviewModel.errorMessage.observe(this.viewLifecycleOwner, Observer {
             Log.i("AliTag", "error: $it")
         })
