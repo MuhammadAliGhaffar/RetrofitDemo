@@ -48,7 +48,7 @@ class UserFragment : Fragment() {
         viewModel.errorMessage.observe(this.viewLifecycleOwner, Observer {
             Log.i("AliTag", "error: $it")
         })
-        usersAdapter.onItemClick = { user: User, i: Int ->
+        usersAdapter.onItemClick = { user: User ->
             Toast.makeText(context, user.toString(), Toast.LENGTH_SHORT).show()
         }
         viewModel.getAllUsers()

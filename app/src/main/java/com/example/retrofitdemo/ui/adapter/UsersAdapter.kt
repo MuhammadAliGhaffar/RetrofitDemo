@@ -19,7 +19,7 @@ class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.Vie
     /**
      * onClickItem RelativeLayout
      */
-    var onItemClick: ((User, pos: Int) -> Unit)? = null
+    var onItemClick: ((User) -> Unit)? = null
 
     fun setuserList(list: List<User>) {
         this.list = list.toMutableList()
@@ -43,7 +43,7 @@ class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.Vie
          * Item click implementation
          */
         holder.relativeLL.setOnClickListener {
-            onItemClick?.invoke(list[position], position)
+            onItemClick?.invoke(list[position])
         }
     }
 
