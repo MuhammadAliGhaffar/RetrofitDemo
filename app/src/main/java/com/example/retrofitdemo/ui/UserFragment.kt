@@ -22,13 +22,16 @@ import javax.inject.Inject
 class UserFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    @Inject lateinit var usersAdapter: UsersAdapter
-    private val userviewModel:UserViewModel by viewModels()
+
+    @Inject
+    lateinit var usersAdapter: UsersAdapter
+    private val viewModel: UserViewModel by viewModels()
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view: View = inflater.inflate(R.layout.fragment_user, container, false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        val view: View = inflater.inflate(R.layout.fragment_user, container, false)
         initView(view)
         return view
     }
@@ -39,19 +42,16 @@ class UserFragment : Fragment() {
 
         recyclerView.adapter = usersAdapter
 
-
-        userviewModel.userList.observe(this.viewLifecycleOwner, Observer {
+        viewModel.userList.observe(this.viewLifecycleOwner, Observer {
             usersAdapter.setuserList(it)
         })
-        userviewModel.errorMessage.observe(this.viewLifecycleOwner, Observer {
+        viewModel.errorMessage.observe(this.viewLifecycleOwner, Observer {
             Log.i("AliTag", "error: $it")
         })
-
         usersAdapter.onItemClick = { user: User, i: Int ->
             Toast.makeText(context, user.toString(), Toast.LENGTH_SHORT).show()
         }
-
-        userviewModel.getAllUsers()
+        viewModel.getAllUsers()
 
     }
 }

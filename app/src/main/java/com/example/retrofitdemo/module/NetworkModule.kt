@@ -33,6 +33,7 @@ object NetworkModule {
 
 
     @Provides
+    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.github.com/")
@@ -42,6 +43,7 @@ object NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideApiClient(retrofit: Retrofit): RetrofitService {
         return retrofit.create(RetrofitService::class.java)
     }
