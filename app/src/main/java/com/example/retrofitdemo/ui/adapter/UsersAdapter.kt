@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.retrofitdemo.R
@@ -51,7 +52,7 @@ class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.Vie
         return list.size
     }
 
-    class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val avatarImageView: ImageView = itemView.findViewById(R.id.avatarImageView)
         val usernameTextView: TextView = itemView.findViewById(R.id.usernameTextView)
         val profileTextView: TextView = itemView.findViewById(R.id.profileTextView)
