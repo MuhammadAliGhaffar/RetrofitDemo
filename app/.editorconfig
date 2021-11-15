@@ -1,4 +1,5 @@
 [*.{kt,kts}]
+# disable wildcard imports
 disabled_rules=no-wildcard-imports
 # possible values: number (e.g. 2), "unset" (makes ktlint ignore indentation completely)
 indent_size=4
