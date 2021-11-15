@@ -49,7 +49,7 @@ class UserFragment : Fragment() {
             Log.i("AliTag", "error: $it")
         })
         usersAdapter.onItemClick = { user: User ->
-            Toast.makeText(context, user.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Username :${user.username}", Toast.LENGTH_SHORT).show()
         }
         viewModel.getAllUsers()
 
