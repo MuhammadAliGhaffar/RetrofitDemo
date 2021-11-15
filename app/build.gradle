@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'org.jlleitschuh.gradle.ktlint'
+    id 'io.gitlab.arturbosch.detekt'
 }
 
 android {
@@ -35,6 +36,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+}
+
+detekt {
+    toolVersion = "1.18.1"
+    config = files("config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
 }
 
 dependencies {

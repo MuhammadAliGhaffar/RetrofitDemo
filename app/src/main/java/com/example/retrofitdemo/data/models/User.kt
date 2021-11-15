@@ -6,9 +6,9 @@ data class User(
     @SerializedName("login")
     val username: String,
     @SerializedName("avatar_url")
-    val avatar_url: String,
+    val avatarUrl: String,
     @SerializedName("html_url")
-    val profile_url: String,
+    val profileUrl: String,
     @SerializedName("starred_url")
-    val starred_url: String
+    val starredUrl: String
 )

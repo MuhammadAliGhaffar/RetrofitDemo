@@ -35,10 +35,10 @@ class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.Vie
         val userModel = list[position]
 
         // holder.imageView.setImageResource(userModel.getavatar_url())
-        Glide.with(holder.imageView.context).load(userModel.avatar_url).into(holder.imageView)
-        holder.txtUsername.text = "Username :${userModel.username}"
-        holder.profile_url_textView.text = "Profile :${userModel.profile_url}"
-        holder.starred_url_textView.text = "Starred :${userModel.starred_url}"
+        Glide.with(holder.avatarImageView.context).load(userModel.avatarUrl).into(holder.avatarImageView)
+        holder.usernameTextView.text = "Username :${userModel.username}"
+        holder.profileTextView.text = "Profile :${userModel.profileUrl}"
+        holder.starredTextView.text = "Starred :${userModel.starredUrl}"
         /**
          * Item click implementation
          */
@@ -52,10 +52,10 @@ class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.Vie
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.avatar_url)
-        val txtUsername: TextView = itemView.findViewById(R.id.username)
-        val profile_url_textView: TextView = itemView.findViewById(R.id.profile_url)
-        val starred_url_textView: TextView = itemView.findViewById(R.id.starred_url)
+        val avatarImageView: ImageView = itemView.findViewById(R.id.avatar_url)
+        val usernameTextView: TextView = itemView.findViewById(R.id.username)
+        val profileTextView: TextView = itemView.findViewById(R.id.profile_url)
+        val starredTextView: TextView = itemView.findViewById(R.id.starred_url)
         val relativeLL: RelativeLayout = itemView.findViewById(R.id.relativeLL)
     }
 }
