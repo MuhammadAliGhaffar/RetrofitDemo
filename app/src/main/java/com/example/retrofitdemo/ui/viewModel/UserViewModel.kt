@@ -7,10 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel

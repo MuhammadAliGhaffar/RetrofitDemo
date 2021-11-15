@@ -34,7 +34,7 @@ class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.Vie
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userModel = list[position]
 
-        //holder.imageView.setImageResource(userModel.getavatar_url())
+        // holder.imageView.setImageResource(userModel.getavatar_url())
         Glide.with(holder.imageView.context).load(userModel.avatar_url).into(holder.imageView)
         holder.txtUsername.text = "Username :${userModel.username}"
         holder.profile_url_textView.text = "Profile :${userModel.profile_url}"
