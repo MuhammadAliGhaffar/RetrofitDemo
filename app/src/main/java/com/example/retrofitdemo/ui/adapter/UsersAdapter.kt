@@ -52,10 +52,10 @@ class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.Vie
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val avatarImageView: ImageView = itemView.findViewById(R.id.avatar_url)
-        val usernameTextView: TextView = itemView.findViewById(R.id.username)
-        val profileTextView: TextView = itemView.findViewById(R.id.profile_url)
-        val starredTextView: TextView = itemView.findViewById(R.id.starred_url)
+        val avatarImageView: ImageView = itemView.findViewById(R.id.avatarImageView)
+        val usernameTextView: TextView = itemView.findViewById(R.id.usernameTextView)
+        val profileTextView: TextView = itemView.findViewById(R.id.profileTextView)
+        val starredTextView: TextView = itemView.findViewById(R.id.starredTextView)
         val relativeLL: RelativeLayout = itemView.findViewById(R.id.relativeLL)
     }
 }
