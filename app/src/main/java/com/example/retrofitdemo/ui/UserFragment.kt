@@ -27,9 +27,10 @@ class UserFragment : Fragment() {
     lateinit var usersAdapter: UsersAdapter
     private val viewModel: UserViewModel by viewModels()
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         val view: View = inflater.inflate(R.layout.fragment_user, container, false)
         initView(view)
@@ -42,16 +43,21 @@ class UserFragment : Fragment() {
 
         recyclerView.adapter = usersAdapter
 
-        viewModel.userList.observe(this.viewLifecycleOwner, Observer {
-            usersAdapter.setuserList(it)
-        })
-        viewModel.errorMessage.observe(this.viewLifecycleOwner, Observer {
-            Log.i("AliTag", "error: $it")
-        })
+        viewModel.userList.observe(
+            this.viewLifecycleOwner,
+            Observer {
+                usersAdapter.setuserList(it)
+            }
+        )
+        viewModel.errorMessage.observe(
+            this.viewLifecycleOwner,
+            Observer {
+                Log.i("AliTag", "error: $it")
+            }
+        )
         usersAdapter.onItemClick = { user: User ->
-            Toast.makeText(context, user.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Username :${user.username}", Toast.LENGTH_SHORT).show()
         }
         viewModel.getAllUsers()
-
     }
 }
