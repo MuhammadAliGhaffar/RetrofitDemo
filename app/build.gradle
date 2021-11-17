@@ -81,6 +81,9 @@ kapt {
     correctErrorTypes true
 }
 
+/**
+ * For Git-Hooks
+ */
 static def isLinuxOrMacOs() {
     def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
     return osName.contains('linux') || osName.contains('mac os') || osName.contains('macos')
