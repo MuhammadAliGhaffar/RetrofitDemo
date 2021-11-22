@@ -21,6 +21,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class UserFragment : Fragment() {
 
+//    private lateinit var database: UserDatabase
     private lateinit var recyclerView: RecyclerView
 
     @Inject
@@ -43,9 +44,14 @@ class UserFragment : Fragment() {
 
         recyclerView.adapter = usersAdapter
 
+//        database = UserDatabase.getDatabase(requireContext())
+
         viewModel.userList.observe(
             this.viewLifecycleOwner,
             Observer {
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    database.userDao().insertUser(it)
+//                }
                 usersAdapter.setuserList(it)
             }
         )
@@ -56,7 +62,10 @@ class UserFragment : Fragment() {
             }
         )
         usersAdapter.onItemClick = { user: User ->
-            Toast.makeText(context, "Username :${user.username}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "ID :${user.id}\nUsername :${user.username}", Toast.LENGTH_SHORT).show()
+//            database.userDao().getUser().observe(requireActivity(), Observer {
+//                Log.d("_debug",it.toString())
+//            })
         }
         viewModel.getAllUsers()
     }
