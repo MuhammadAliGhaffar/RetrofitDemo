@@ -1,6 +1,5 @@
 package com.example.retrofitdemo.room
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -14,5 +13,5 @@ interface UserDAO {
     suspend fun insertUser(list: List<User>)
 
     @Query("SELECT * FROM tbl_user")
-    fun getUser(): LiveData<List<User>>
+    suspend fun getUser(): List<User>
 }
