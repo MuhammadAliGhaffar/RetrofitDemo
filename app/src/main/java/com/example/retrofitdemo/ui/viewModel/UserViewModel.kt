@@ -23,23 +23,21 @@ class UserViewModel @Inject constructor(private val repository: Repository) : Vi
     var b: Boolean = false
 
     fun getAllUsers() {
-        //Checking whether internet is available or not
+        // Checking whether internet is available or not
         viewModelScope.launch {
-            if (b) { //If available
+            if (b) { // If available
                 val response = repository.getAllNetworkUsers()
                 if (response.isSuccessful) {
-                    Log.d("_debug","Internet is available")
+                    Log.d("_debug", "Internet is available")
                     response.body()?.let { repository.allDatabaseUsers().userDao().insertUser(it) }
                     _userList.postValue(response.body())
                 } else {
                     errorMessage.postValue(response.message())
                 }
-            } else { //If not available
-                Log.d("_debug","Internet is not available")
+            } else { // If not available
+                Log.d("_debug", "Internet is not available")
                 _userList.postValue(repository.allDatabaseUsers().userDao().getUser())
             }
         }
-
-
     }
 }
