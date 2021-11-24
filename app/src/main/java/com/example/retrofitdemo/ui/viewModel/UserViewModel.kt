@@ -19,9 +19,9 @@ class UserViewModel @Inject constructor(private val repository: Repository) : Vi
 
     val errorMessage = MutableLiveData<String>()
 
-    fun getAllUsers() {
+    fun getAllNetworkUsers() {
         viewModelScope.launch {
-            val response = repository.getAllUsers()
+            val response = repository.getAllNetworkUsers()
             if (response.isSuccessful) {
                 _userList.postValue(response.body())
             } else {

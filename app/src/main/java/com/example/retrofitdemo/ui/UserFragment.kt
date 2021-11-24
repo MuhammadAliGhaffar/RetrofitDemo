@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitdemo.R
+import com.example.retrofitdemo.Utils
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.ui.adapter.UsersAdapter
 import com.example.retrofitdemo.ui.viewModel.UserViewModel
@@ -21,7 +22,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class UserFragment : Fragment() {
 
-//    private lateinit var database: UserDatabase
     private lateinit var recyclerView: RecyclerView
 
     @Inject
@@ -44,29 +44,29 @@ class UserFragment : Fragment() {
 
         recyclerView.adapter = usersAdapter
 
-//        database = UserDatabase.getDatabase(requireContext())
-
         viewModel.userList.observe(
             this.viewLifecycleOwner,
             Observer {
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    database.userDao().insertUser(it)
-//                }
                 usersAdapter.setuserList(it)
             }
         )
-        viewModel.errorMessage.observe(
-            this.viewLifecycleOwner,
-            Observer {
-                Log.i("AliTag", "error: $it")
-            }
-        )
+//        viewModel.errorMessage.observe(
+//            this.viewLifecycleOwner,
+//            Observer {
+//                Log.d("_debug", "error: $it")
+//            }
+//        )
         usersAdapter.onItemClick = { user: User ->
             Toast.makeText(context, "ID :${user.id}\nUsername :${user.username}", Toast.LENGTH_SHORT).show()
-//            database.userDao().getUser().observe(requireActivity(), Observer {
-//                Log.d("_debug",it.toString())
-//            })
         }
-        viewModel.getAllUsers()
+
+        if (Utils.isOnline(requireContext())) {
+            Log.d("_debug", "Internet is Connected")
+            Toast.makeText(requireContext(), "Loading Data from Internet", Toast.LENGTH_SHORT).show()
+            viewModel.getAllNetworkUsers()
+        } else {
+            Log.d("_debug", "No Internet")
+            Toast.makeText(requireContext(), "Loading Data from Database", Toast.LENGTH_SHORT).show()
+        }
     }
 }
