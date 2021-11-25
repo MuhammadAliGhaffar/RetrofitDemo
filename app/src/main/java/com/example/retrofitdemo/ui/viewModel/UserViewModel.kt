@@ -20,12 +20,12 @@ class UserViewModel @Inject constructor(private val repository: Repository) : Vi
 
     val errorMessage = MutableLiveData<String>()
 
-    var b: Boolean = false
+    val checkConnection = MutableLiveData<Boolean>()
 
     fun getAllUsers() {
         // Checking whether internet is available or not
         viewModelScope.launch {
-            if (b) { // If available
+            if (checkConnection.value == true) { // If available
                 val response = repository.getAllNetworkUsers()
                 if (response.isSuccessful) {
                     Log.d("_debug", "Internet is available")
