@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitdemo.R
+import com.example.retrofitdemo.Utils
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.ui.adapter.UsersAdapter
 import com.example.retrofitdemo.ui.viewModel.UserViewModel
@@ -40,8 +41,9 @@ class UserFragment : Fragment() {
     private fun initView(view: View) {
         recyclerView = view.findViewById(R.id.recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(context)
-
         recyclerView.adapter = usersAdapter
+
+        viewModel.checkConnection.value = Utils.isOnline(requireContext())
 
         viewModel.userList.observe(
             this.viewLifecycleOwner,
@@ -52,12 +54,13 @@ class UserFragment : Fragment() {
         viewModel.errorMessage.observe(
             this.viewLifecycleOwner,
             Observer {
-                Log.i("AliTag", "error: $it")
+                Log.d("_debug", "error: $it")
             }
         )
         usersAdapter.onItemClick = { user: User ->
-            Toast.makeText(context, "Username :${user.username}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "ID :${user.id}\nUsername :${user.username}", Toast.LENGTH_SHORT).show()
         }
+
         viewModel.getAllUsers()
     }
 }
