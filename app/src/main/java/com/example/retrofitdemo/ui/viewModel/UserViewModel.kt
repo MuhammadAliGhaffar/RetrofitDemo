@@ -29,7 +29,6 @@ class UserViewModel @Inject constructor(private val repository: Repository) : Vi
                 val response = repository.getAllNetworkUsers()
                 if (response.isSuccessful) {
                     Log.d("_debug", "Internet is available")
-                    response.body()?.let { repository.allDatabaseUsers().userDao().insertUser(it) }
                     _userList.postValue(response.body())
                 } else {
                     errorMessage.postValue(response.message())
