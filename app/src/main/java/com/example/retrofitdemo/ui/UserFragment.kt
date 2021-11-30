@@ -78,7 +78,7 @@ class UserFragment : Fragment() {
 
     private fun setupWork() {
         val constraint = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val workRequest = PeriodicWorkRequest.Builder(UserWorker::class.java, 6, TimeUnit.HOURS)
+        val workRequest = PeriodicWorkRequest.Builder(UserWorker::class.java, 1, TimeUnit.SECONDS)
             .setConstraints(constraint).build()
         WorkManager.getInstance(requireContext()).enqueue(workRequest)
     }
