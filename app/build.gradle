@@ -60,8 +60,8 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:4.9.3"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
     //Navigation Component
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.4.0-beta02"
+    implementation "androidx.navigation:navigation-ui-ktx:2.4.0-beta02"
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     // LiveData
@@ -78,6 +78,13 @@ dependencies {
     implementation "androidx.room:room-runtime:2.3.0"
     kapt "androidx.room:room-compiler:2.3.0"
     implementation "androidx.room:room-ktx:2.3.0"
+    //WorkManager
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
+    implementation 'androidx.hilt:hilt-work:1.0.0'
+    // When using Kotlin.
+    kapt 'androidx.hilt:hilt-compiler:1.0.0'
+    //Startup Worker for Manifest
+    implementation "androidx.startup:startup-runtime:1.1.0"
 
 }
 
