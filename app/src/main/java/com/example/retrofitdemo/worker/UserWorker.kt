@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.retrofitdemo.repository.Repository
 import com.example.retrofitdemo.repository.RetrofitService
 import com.example.retrofitdemo.room.UserDAO
 import dagger.assisted.Assisted
@@ -28,10 +27,8 @@ class UserWorker @AssistedInject constructor(
                     userDAO.insertUser(it)
                     Log.d("_debug", "Worker Called - Updated list added in Database $it")
                 }
-
             }
         }
-
         return Result.failure()
     }
 }
