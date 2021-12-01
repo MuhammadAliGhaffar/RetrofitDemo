@@ -3,17 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/divider"
     tools:context=".ui.UserFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary">
+
+            <TextView
+                android:id="@+id/userIDTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="UserApp"
+                android:textColor="@color/icons"
+                android:textSize="20sp" />
+        </androidx.appcompat.widget.Toolbar>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
-            tools:listitem="@layout/users_item"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolBar"
+            tools:listitem="@layout/users_item" />
     </RelativeLayout>
 
 </FrameLayout>

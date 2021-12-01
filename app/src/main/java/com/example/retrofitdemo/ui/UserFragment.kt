@@ -5,10 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.Constraints
@@ -19,6 +20,7 @@ import com.example.retrofitdemo.R
 import com.example.retrofitdemo.Utils
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.ui.adapter.UsersAdapter
+import com.example.retrofitdemo.ui.viewModel.ItemViewModel
 import com.example.retrofitdemo.ui.viewModel.UserViewModel
 import com.example.retrofitdemo.worker.UserWorker
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +35,7 @@ class UserFragment : Fragment() {
     @Inject
     lateinit var usersAdapter: UsersAdapter
     private val viewModel: UserViewModel by viewModels()
+    private val itemViewModel: ItemViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,11 +67,8 @@ class UserFragment : Fragment() {
             }
         )
         usersAdapter.onItemClick = { user: User ->
-            Toast.makeText(
-                context,
-                "ID :${user.id}\nUsername :${user.username}",
-                Toast.LENGTH_SHORT
-            ).show()
+            itemViewModel.user.postValue(user)
+            findNavController().navigate(R.id.action_userFragment_to_itemFragment)
         }
 
         viewModel.getAllUsers()

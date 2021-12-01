@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Name"
-            android:textColor="#000000"
+            android:textColor="@color/icons"
             android:textSize="18sp" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="profile url"
-            android:textColor="#000000"
+            android:textColor="@color/icons"
             android:textSize="18sp" />
 
         <TextView
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="starred_url"
-            android:textColor="#000000"
+            android:textColor="@color/icons"
             android:textSize="18sp" />
 
     </LinearLayout>

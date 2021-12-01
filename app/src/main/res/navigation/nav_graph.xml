@@ -9,5 +9,14 @@
         android:id="@+id/userFragment"
         android:name="com.example.retrofitdemo.ui.UserFragment"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_user" />
+        tools:layout="@layout/fragment_user" >
+        <action
+            android:id="@+id/action_userFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.example.retrofitdemo.ui.ItemFragment"
+        android:label="item_fragment"
+        tools:layout="@layout/item_fragment" />
 </navigation>
