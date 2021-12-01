@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -23,6 +24,7 @@ import com.example.retrofitdemo.ui.adapter.UsersAdapter
 import com.example.retrofitdemo.ui.viewModel.ItemViewModel
 import com.example.retrofitdemo.ui.viewModel.UserViewModel
 import com.example.retrofitdemo.worker.UserWorker
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -31,6 +33,7 @@ import javax.inject.Inject
 class UserFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var fL: FrameLayout
 
     @Inject
     lateinit var usersAdapter: UsersAdapter
@@ -49,10 +52,16 @@ class UserFragment : Fragment() {
 
     private fun initView(view: View) {
         recyclerView = view.findViewById(R.id.recyclerview)
+        fL = view.findViewById(R.id.fL)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = usersAdapter
 
         viewModel.checkConnection.value = Utils.isOnline(requireContext())
+        if (viewModel.checkConnection.value == true) {
+            Snackbar.make(fL, "Online - Showing Items from API", Snackbar.LENGTH_LONG).show()
+        } else {
+            Snackbar.make(fL, "Offline - Showing Items from Database", Snackbar.LENGTH_LONG).show()
+        }
 
         viewModel.userList.observe(
             this.viewLifecycleOwner,

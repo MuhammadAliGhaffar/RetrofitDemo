@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:text="Name"
             android:textColor="@color/icons"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/profileTextView"
@@ -41,7 +41,7 @@
             android:layout_weight="1"
             android:text="profile url"
             android:textColor="@color/icons"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/starredTextView"
@@ -50,7 +50,7 @@
             android:layout_weight="1"
             android:text="starred_url"
             android:textColor="@color/icons"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
