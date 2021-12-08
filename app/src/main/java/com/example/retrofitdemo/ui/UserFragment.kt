@@ -9,7 +9,6 @@ import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -65,13 +64,13 @@ class UserFragment : Fragment() {
 
         viewModel.userList.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 usersAdapter.setuserList(it)
             }
         )
         viewModel.errorMessage.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 Log.d("_debug", "error: $it")
             }
         )
@@ -87,7 +86,7 @@ class UserFragment : Fragment() {
 
     private fun setupWork() {
         val constraint = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val workRequest = PeriodicWorkRequest.Builder(UserWorker::class.java, 6, TimeUnit.HOURS)
+        val workRequest = PeriodicWorkRequest.Builder(UserWorker::class.java, 6, TimeUnit.SECONDS)
             .setConstraints(constraint).build()
         WorkManager.getInstance(requireContext()).enqueue(workRequest)
     }

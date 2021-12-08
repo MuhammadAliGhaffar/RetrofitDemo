@@ -1,4 +1,4 @@
-package com.example.retrofitdemo
+package com.example.retrofitdemo.Testing
 
 object RegistrationUtils {
 
@@ -15,19 +15,16 @@ object RegistrationUtils {
         username: String,
         password: String,
         confirmedPassword: String
-    ): Boolean {
+    ): Error {
         if (username.isEmpty() || password.isEmpty()) {
-            return false
+            return Error.USERNAME_OR_PASSWORD_IS_EMPTY
+        } else if (username in existingUsers) {
+            return Error.USERNAME_IS_ALREADY_TAKEN
+        } else if (password != confirmedPassword) {
+            return Error.CONFIRMED_PASSWORD_IS_NOT_THE_SAME_AS_THE_REAL_PASSWORD
+        } else if (password.count { it.isDigit() } < 2) {
+            return Error.PASSWORD_CONTAINS_LESS_THAN_2_DIGITS
         }
-        if (username in existingUsers) {
-            return false
-        }
-        if (password != confirmedPassword) {
-            return false
-        }
-        if (password.count { it.isDigit() } < 2) {
-            return false
-        }
-        return true
+        return Error.SUCCESS
     }
 }

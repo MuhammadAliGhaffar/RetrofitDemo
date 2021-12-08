@@ -1,5 +1,7 @@
 package com.example.retrofitdemo
 
+import com.example.retrofitdemo.Testing.Error
+import com.example.retrofitdemo.Testing.RegistrationUtils
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -12,7 +14,7 @@ class RegistrationUtilsTest {
             "123",
             "123"
         )
-        assertEquals(result, false)
+        assertEquals(result, Error.USERNAME_OR_PASSWORD_IS_EMPTY)
     }
 
     @Test
@@ -22,7 +24,7 @@ class RegistrationUtilsTest {
             "123",
             "123"
         )
-        assertEquals(result, true)
+        assertEquals(result, Error.SUCCESS)
     }
 
     @Test
@@ -32,7 +34,7 @@ class RegistrationUtilsTest {
             "123",
             "123"
         )
-        assertEquals(result, false)
+        assertEquals(result, Error.USERNAME_IS_ALREADY_TAKEN)
     }
 
     @Test
@@ -42,26 +44,26 @@ class RegistrationUtilsTest {
             "",
             ""
         )
-        assertEquals(result, false)
+        assertEquals(result, Error.USERNAME_OR_PASSWORD_IS_EMPTY)
     }
 
     @Test
     fun `password repeated incorrectly return false`() {
         val result = RegistrationUtils.validateRegistrationInput(
-            "Peter",
+            "Ali",
             "123",
             "1234"
         )
-        assertEquals(result, false)
+        assertEquals(result, Error.CONFIRMED_PASSWORD_IS_NOT_THE_SAME_AS_THE_REAL_PASSWORD)
     }
 
     @Test
     fun `less that 2 digits password return false`() {
         val result = RegistrationUtils.validateRegistrationInput(
-            "Peter",
+            "Ali",
             "abcd2",
             "abcd2"
         )
-        assertEquals(result, false)
+        assertEquals(result, Error.PASSWORD_CONTAINS_LESS_THAN_2_DIGITS)
     }
 }

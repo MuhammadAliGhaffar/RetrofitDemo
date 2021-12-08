@@ -35,7 +35,7 @@ class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.Vie
         val userModel = list[position]
 
         // holder.imageView.setImageResource(userModel.getavatar_url())
-        Glide.with(holder.avatarImageView.context).load(userModel.avatarUrl).into(holder.avatarImageView)
+        Glide.with(holder.avatarImageView.context).load(userModel.avatarUrl).placeholder(R.drawable.ic_reload).into(holder.avatarImageView)
         holder.usernameTextView.text = "Username :${userModel.username}"
         holder.profileTextView.text = "Profile :${userModel.profileUrl}"
         holder.starredTextView.text = "Starred :${userModel.starredUrl}"
