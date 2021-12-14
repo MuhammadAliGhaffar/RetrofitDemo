@@ -10,4 +10,4 @@
 9. Room for offline caching when internet is not avalaible
 10. Add WorkManager to schedule some task like adding list in db every 6 hrs later
 
-![alt text](https://github.com/MuhammadAliGhaffar/RetrofitDemo/blob/master/screenshot/demo.gif)
+<img src="https://github.com/MuhammadAliGhaffar/RetrofitDemo/blob/master/screenshot/demo.gif" width="200">
