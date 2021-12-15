@@ -12,20 +12,22 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule(
-    private var retrofitService: RetrofitService? = null,
     private val baseUrl: String = "https://api.github.com/"
 ) {
 
     @Singleton
     @Provides
-    fun provideRetrofitInstance(): RetrofitService {
-        if (retrofitService == null) {
-            val retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            retrofitService = retrofit.create(RetrofitService::class.java)
-        }
-        return retrofitService!!
+    fun provideRetrofitInstance(gsonConverterFactory: GsonConverterFactory): RetrofitService {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+            .create(RetrofitService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGsonConverterFactoryInstance(): GsonConverterFactory {
+        return GsonConverterFactory.create()
     }
 }

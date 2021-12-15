@@ -9,7 +9,6 @@ import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,7 +55,7 @@ class UserFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = usersAdapter
 
-        viewModel.checkConnection.value = Utils.isOnline(requireContext())
+        viewModel.checkConnection.value = Utils.internetIsConnected()
         if (viewModel.checkConnection.value == true) {
             Snackbar.make(fL, "Online - Showing Items from API", Snackbar.LENGTH_LONG).show()
         } else {
@@ -65,13 +64,13 @@ class UserFragment : Fragment() {
 
         viewModel.userList.observe(
             this.viewLifecycleOwner,
-            Observer {
-                usersAdapter.setuserList(it)
+            {
+                usersAdapter.setUserList(it)
             }
         )
         viewModel.errorMessage.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 Log.d("_debug", "error: $it")
             }
         )
