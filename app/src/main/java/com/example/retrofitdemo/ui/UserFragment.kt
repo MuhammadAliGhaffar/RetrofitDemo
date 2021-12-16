@@ -12,20 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.Utils
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.ui.adapter.UsersAdapter
 import com.example.retrofitdemo.ui.viewModel.ItemViewModel
 import com.example.retrofitdemo.ui.viewModel.UserViewModel
-import com.example.retrofitdemo.worker.UserWorker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -80,14 +74,5 @@ class UserFragment : Fragment() {
         }
 
         viewModel.getAllUsers()
-
-        setupWork()
-    }
-
-    private fun setupWork() {
-        val constraint = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val workRequest = PeriodicWorkRequest.Builder(UserWorker::class.java, 6, TimeUnit.HOURS)
-            .setConstraints(constraint).build()
-        WorkManager.getInstance(requireContext()).enqueue(workRequest)
     }
 }
