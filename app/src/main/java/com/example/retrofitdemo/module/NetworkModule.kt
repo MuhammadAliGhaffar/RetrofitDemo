@@ -1,6 +1,6 @@
 package com.example.retrofitdemo.module
 
-import com.example.retrofitdemo.repository.RetrofitService
+import com.example.retrofitdemo.network.RetrofitService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

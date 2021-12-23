@@ -1,13 +1,12 @@
 package com.example.retrofitdemo.repository
 
 import com.example.retrofitdemo.data.models.User
-import com.example.retrofitdemo.room.UserDatabase
-import retrofit2.Response
+import com.example.retrofitdemo.database.UserDatabase
+import com.example.retrofitdemo.network.ApiState
+import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    suspend fun getAllNetworkUsers(): Response<List<User>>
-
     fun allDatabaseUsers(): UserDatabase
 
-    suspend fun loadUser(): List<User>?
+    suspend fun getUser(): Flow<ApiState<List<User>?>>
 }

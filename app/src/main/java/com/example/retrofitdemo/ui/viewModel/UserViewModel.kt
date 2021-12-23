@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +23,14 @@ class UserViewModel @Inject constructor(private val repository: Repository) : Vi
     fun getAllUsers() {
         // Checking whether internet is available or not
         viewModelScope.launch {
-            _userList.postValue(repository.loadUser())
+
+            repository.getUser()
+                .catch {
+                    errorMessage.postValue(it.message.toString())
+                }
+                .collect {
+                    _userList.postValue(it.data!!)
+                }
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.retrofitdemo.repository
+package com.example.retrofitdemo.network
 
 import com.example.retrofitdemo.data.models.User
 import retrofit2.Response

@@ -1,4 +1,4 @@
-package com.example.retrofitdemo.room
+package com.example.retrofitdemo.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
