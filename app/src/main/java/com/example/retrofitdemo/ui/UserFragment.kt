@@ -49,8 +49,7 @@ class UserFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = usersAdapter
 
-        viewModel.checkConnection.value = Utils.internetIsConnected()
-        if (viewModel.checkConnection.value == true) {
+        if (Utils.internetIsConnected()) {
             Snackbar.make(fL, "Online - Showing Items from API", Snackbar.LENGTH_LONG).show()
         } else {
             Snackbar.make(fL, "Offline - Showing Items from Database", Snackbar.LENGTH_LONG).show()

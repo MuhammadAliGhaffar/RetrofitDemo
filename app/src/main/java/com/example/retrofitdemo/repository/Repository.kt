@@ -8,4 +8,6 @@ interface Repository {
     suspend fun getAllNetworkUsers(): Response<List<User>>
 
     fun allDatabaseUsers(): UserDatabase
+
+    suspend fun loadUser(): List<User>?
 }

@@ -19,12 +19,9 @@ class UserWorker @AssistedInject constructor(
 ) : CoroutineWorker(appContext, workerParams) {
     override suspend fun doWork(): Result {
         withContext(Dispatchers.IO) {
-            val response = repository.getAllNetworkUsers()
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    repository.allDatabaseUsers().userDao().insertUser(it)
-                    Log.d("_debug", "Worker Called - Updated list added in Database $it")
-                }
+            repository.loadUser()?.let {
+                repository.allDatabaseUsers().userDao().insertUser(it)
+                Log.d("_debug", "Worker Called - Updated list added in Database $it")
             }
         }
         return Result.failure()

@@ -1,6 +1,5 @@
 package com.example.retrofitdemo.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,23 +19,10 @@ class UserViewModel @Inject constructor(private val repository: Repository) : Vi
 
     val errorMessage = MutableLiveData<String>()
 
-    val checkConnection = MutableLiveData<Boolean>()
-
     fun getAllUsers() {
         // Checking whether internet is available or not
         viewModelScope.launch {
-            if (checkConnection.value == true) { // If available
-                val response = repository.getAllNetworkUsers()
-                if (response.isSuccessful) {
-                    Log.d("_debug", "Internet is available")
-                    _userList.postValue(response.body())
-                } else {
-                    errorMessage.postValue(response.message())
-                }
-            } else { // If not available
-                Log.d("_debug", "Internet is not available")
-                _userList.postValue(repository.allDatabaseUsers().userDao().getUser())
-            }
+            _userList.postValue(repository.loadUser())
         }
     }
 }
