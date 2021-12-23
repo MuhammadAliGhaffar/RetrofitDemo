@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.retrofitdemo.repository.Repository
+import com.example.retrofitdemo.repository.CoreRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -15,13 +15,13 @@ import kotlinx.coroutines.withContext
 class UserWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
-    private val repository: Repository
+    private val coreRepository: CoreRepository
 ) : CoroutineWorker(appContext, workerParams) {
     override suspend fun doWork(): Result {
         withContext(Dispatchers.IO) {
-            repository.getUser().collect {
+            coreRepository.getUser().collect {
                 it.data?.let { it ->
-                    repository.allDatabaseUsers().userDao().insertUser(it)
+                    coreRepository.allDatabaseUsers().userDao().insertUser(it)
                     Log.d("_debug", "Worker Called - Updated list added in Database $it")
                 }
             }

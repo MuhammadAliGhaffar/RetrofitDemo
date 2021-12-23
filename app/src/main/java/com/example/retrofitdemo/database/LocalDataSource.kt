@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.retrofitdemo.data.models.User
 
 @Database(entities = [User::class], version = 1)
-abstract class UserDatabase : RoomDatabase() {
+abstract class LocalDataSource : RoomDatabase() {
 
     abstract fun userDao(): UserDAO
 }

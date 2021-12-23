@@ -2,8 +2,8 @@ package com.example.retrofitdemo.module
 
 import android.content.Context
 import androidx.room.Room
+import com.example.retrofitdemo.database.LocalDataSource
 import com.example.retrofitdemo.database.UserDAO
-import com.example.retrofitdemo.database.UserDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,18 +13,18 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class DatabaseModule {
+class LocalDataSourceModule {
     @Provides
-    fun provideChannelDao(userDatabase: UserDatabase): UserDAO {
-        return userDatabase.userDao()
+    fun provideChannelDao(localDataSource: LocalDataSource): UserDAO {
+        return localDataSource.userDao()
     }
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): UserDatabase {
+    fun provideAppDatabase(@ApplicationContext context: Context): LocalDataSource {
         return Room.databaseBuilder(
             context,
-            UserDatabase::class.java,
+            LocalDataSource::class.java,
             "userDB"
         ).build()
     }

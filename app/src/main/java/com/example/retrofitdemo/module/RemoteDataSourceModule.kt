@@ -1,6 +1,6 @@
 package com.example.retrofitdemo.module
 
-import com.example.retrofitdemo.network.RetrofitService
+import com.example.retrofitdemo.network.RemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,18 +11,18 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule(
+class RemoteDataSourceModule(
     private val baseUrl: String = "https://api.github.com/"
 ) {
 
     @Singleton
     @Provides
-    fun provideRetrofitInstance(gsonConverterFactory: GsonConverterFactory): RetrofitService {
+    fun provideRetrofitInstance(gsonConverterFactory: GsonConverterFactory): RemoteDataSource {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(gsonConverterFactory)
             .build()
-            .create(RetrofitService::class.java)
+            .create(RemoteDataSource::class.java)
     }
 
     @Singleton
