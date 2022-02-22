@@ -58,7 +58,8 @@ class UserFragment : Fragment() {
         viewModel.userList.observe(
             this.viewLifecycleOwner,
             {
-                usersAdapter.setUserList(it)
+                usersAdapter.setuserList(it)
+
             }
         )
         viewModel.errorMessage.observe(
@@ -73,5 +74,14 @@ class UserFragment : Fragment() {
         }
 
         viewModel.getAllUsers()
+
+        setupWork()
+    }
+
+    private fun setupWork() {
+        val constraint = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+        val workRequest = PeriodicWorkRequest.Builder(UserWorker::class.java, 6, TimeUnit.SECONDS)
+            .setConstraints(constraint).build()
+        WorkManager.getInstance(requireContext()).enqueue(workRequest)
     }
 }

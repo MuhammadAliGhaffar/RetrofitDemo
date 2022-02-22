@@ -33,15 +33,11 @@ class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.Vie
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userModel = list[position]
-
-        Glide.with(holder.avatarImageView.context).load(userModel.avatarUrl)
-            .into(holder.avatarImageView)
-        holder.usernameTextView.text =
-            holder.itemView.resources.getString(R.string.username, userModel.username)
-        holder.profileTextView.text =
-            holder.itemView.resources.getString(R.string.profile, userModel.profileUrl)
-        holder.starredTextView.text =
-            holder.itemView.resources.getString(R.string.starred, userModel.starredUrl)
+        // holder.imageView.setImageResource(userModel.getavatar_url())
+        Glide.with(holder.avatarImageView.context).load(userModel.avatarUrl).placeholder(R.drawable.ic_reload).into(holder.avatarImageView)
+        holder.usernameTextView.text = "Username :${userModel.username}"
+        holder.profileTextView.text = "Profile :${userModel.profileUrl}"
+        holder.starredTextView.text = "Starred :${userModel.starredUrl}"
         /**
          * Item click implementation
          */
