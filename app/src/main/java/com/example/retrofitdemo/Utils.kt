@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
+import java.lang.Exception
 
 object Utils {
     fun isOnline(context: Context): Boolean {
@@ -24,5 +25,14 @@ object Utils {
             }
         }
         return false
+    }
+
+    fun internetIsConnected(): Boolean {
+        return try {
+            val command = "ping -c 1 google.com"
+            Runtime.getRuntime().exec(command).waitFor() == 0
+        } catch (e: Exception) {
+            false
+        }
     }
 }

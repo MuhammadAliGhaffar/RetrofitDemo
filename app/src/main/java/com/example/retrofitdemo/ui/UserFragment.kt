@@ -12,20 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.Utils
 import com.example.retrofitdemo.data.models.User
 import com.example.retrofitdemo.ui.adapter.UsersAdapter
 import com.example.retrofitdemo.ui.viewModel.ItemViewModel
 import com.example.retrofitdemo.ui.viewModel.UserViewModel
-import com.example.retrofitdemo.worker.UserWorker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -55,8 +49,7 @@ class UserFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = usersAdapter
 
-        viewModel.checkConnection.value = Utils.isOnline(requireContext())
-        if (viewModel.checkConnection.value == true) {
+        if (Utils.internetIsConnected()) {
             Snackbar.make(fL, "Online - Showing Items from API", Snackbar.LENGTH_LONG).show()
         } else {
             Snackbar.make(fL, "Offline - Showing Items from Database", Snackbar.LENGTH_LONG).show()
@@ -66,6 +59,7 @@ class UserFragment : Fragment() {
             this.viewLifecycleOwner,
             {
                 usersAdapter.setuserList(it)
+
             }
         )
         viewModel.errorMessage.observe(

@@ -14,14 +14,14 @@ import javax.inject.Inject
 
 class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
-    var list = mutableListOf<User>()
+    private var list = mutableListOf<User>()
 
     /**
      * onClickItem RelativeLayout
      */
     var onItemClick: ((User) -> Unit)? = null
 
-    fun setuserList(list: List<User>) {
+    fun setUserList(list: List<User>) {
         this.list = list.toMutableList()
         notifyDataSetChanged()
     }
@@ -33,7 +33,6 @@ class UsersAdapter @Inject constructor() : RecyclerView.Adapter<UsersAdapter.Vie
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userModel = list[position]
-
         // holder.imageView.setImageResource(userModel.getavatar_url())
         Glide.with(holder.avatarImageView.context).load(userModel.avatarUrl).placeholder(R.drawable.ic_reload).into(holder.avatarImageView)
         holder.usernameTextView.text = "Username :${userModel.username}"
